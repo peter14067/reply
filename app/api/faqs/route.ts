@@ -15,9 +15,17 @@ interface FAQ {
 // 獲取所有 FAQ
 export async function GET() {
   try {
+    console.log('Starting FAQ fetch...')
+    
+    // 檢查資料庫連接
+    await prisma.$connect()
+    console.log('Database connected successfully')
+    
     const faqs = await prisma.fAQ.findMany({
       orderBy: { priority: 'asc' }
     })
+    
+    console.log(`Found ${faqs.length} FAQs`)
     
     // 轉換 keywords 從 JSON 字符串到數組
     const formattedFAQs = faqs.map(faq => ({
@@ -27,16 +35,35 @@ export async function GET() {
       updatedAt: faq.updatedAt.toISOString()
     }))
     
+    console.log('FAQs formatted successfully')
+    
     return NextResponse.json({
       success: true,
       data: formattedFAQs
     })
   } catch (error) {
     console.error('Get FAQs error:', error)
+    
+    // 更詳細的錯誤信息
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    const errorStack = error instanceof Error ? error.stack : undefined
+    
+    console.error('Error details:', {
+      message: errorMessage,
+      stack: errorStack,
+      timestamp: new Date().toISOString()
+    })
+    
     return NextResponse.json(
-      { success: false, error: '獲取 FAQ 失敗' },
+      { 
+        success: false, 
+        error: '獲取 FAQ 失敗',
+        details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+      },
       { status: 500 }
     )
+  } finally {
+    await prisma.$disconnect()
   }
 }
 
