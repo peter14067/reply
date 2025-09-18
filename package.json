@@ -10,6 +10,7 @@
     "db:init": "node scripts/init-db.js",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
+    "postdeploy": "node scripts/post-deploy.js",
     "fix:vercel": "node scripts/fix-vercel-deployment.js"
   },
   "dependencies": {
