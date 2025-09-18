@@ -85,7 +85,7 @@ export default function ChatPage() {
       console.error('Error fetching answer:', error)
       // Fallback to local FAQ matching
       const lowerQuestion = question.toLowerCase()
-      for (const faq of FAQ_QUESTIONS) {
+      for (const faq of faqs) {
         const keywords = faq.question.toLowerCase().split(' ')
         const hasKeyword = keywords.some(keyword => 
           lowerQuestion.includes(keyword) && keyword.length > 2
@@ -97,7 +97,7 @@ export default function ChatPage() {
       }
       return '抱歉，我沒有理解您的問題。請選擇下方常見問題或聯繫人工客服獲得幫助。'
     }
-  }, [sessionId])
+  }, [sessionId, faqs])
 
   const handleSendMessage = useCallback(async () => {
     if (!inputValue.trim()) return
