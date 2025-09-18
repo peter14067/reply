@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  chatbots  Chatbot[]
+  messages  Message[]
+  
+  @@map("users")
+}
+
+model Chatbot {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  faqs        FAQ[]
+  messages    Message[]
+  settings    ChatbotSettings?
+  
+  @@map("chatbots")
+}
+
+model FAQ {
+  id         String   @id @default(cuid())
+  question   String
+  answer     String
+  keywords   String?  // JSON string of keywords for matching
+  priority   Int      @default(0)
+  isActive   Boolean  @default(true)
+  chatbotId  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  // Relations
+  chatbot    Chatbot  @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+  
+  @@map("faqs")
+}
+
+model Message {
+  id          String      @id @default(cuid())
+  content     String
+  type        MessageType @default(USER)
+  isRead      Boolean     @default(false)
+  isResolved  Boolean     @default(false)
+  chatbotId   String
+  userId      String?
+  sessionId   String?     // For grouping messages in a conversation
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  // Relations
+  chatbot     Chatbot     @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+  user        User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  @@map("messages")
+}
+
+model ChatbotSettings {
+  id                String   @id @default(cuid())
+  welcomeMessage    String?  @default("您好！我是您的智能客服助手，有什麼可以幫助您的嗎？")
+  fallbackMessage   String?  @default("抱歉，我沒有理解您的問題。請聯繫人工客服獲得幫助。")
+  workingHours      String?  // JSON string of working hours
+  timezone          String?  @default("Asia/Taipei")
+  autoReplyEnabled  Boolean  @default(true)
+  chatbotId         String   @unique
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relations
+  chatbot           Chatbot  @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+  
+  @@map("chatbot_settings")
+}
+
+enum MessageType {
+  USER
+  BOT
+  SYSTEM
+}

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot Platform - 自動回覆系統</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2>AI Chatbot Platform</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#features">功能特色</a></li>
+                    <li><a href="#pricing">價格方案</a></li>
+                    <li><a href="#demo">立即試用</a></li>
+                    <li><a href="#contact">聯繫我們</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="highlight">AI Chatbot Platform</span><br>
+                    自動回覆系統
+                </h1>
+                <p class="hero-subtitle">
+                    輕鬆設置自動回覆，<br>
+                    快速協助解決常見問題
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">📱</div>
+                        <div class="stat-number">97%</div>
+                        <div class="stat-label">推播平均開啟率</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-number">60%</div>
+                        <div class="stat-label">客服工作量減少</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">💬</div>
+                        <div class="stat-number">40%</div>
+                        <div class="stat-label">社群互動率提升</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-number">80%</div>
+                        <div class="stat-label">廣告預算節省成本</div>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="openChatbot()">立即試用</button>
+                    <button class="btn-secondary" onclick="scrollToSection('pricing')">查看方案</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="chatbot-preview">
+                    <div class="chat-header">
+                        <div class="chat-avatar">🤖</div>
+                        <div class="chat-info">
+                            <h4>AI 客服助手</h4>
+                            <span class="status">線上</span>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="previewMessages">
+                        <div class="message bot-message">
+                            <div class="message-content">
+                                您好！我是 AI 客服助手，有什麼可以幫助您的嗎？
+                            </div>
+                        </div>
+                        <div class="message user-message">
+                            <div class="message-content">
+                                我想了解產品資訊
+                            </div>
+                        </div>
+                        <div class="message bot-message">
+                            <div class="message-content">
+                                好的！請選擇您想了解的內容：
+                                <div class="quick-replies">
+                                    <button class="quick-reply">產品規格</button>
+                                    <button class="quick-reply">價格資訊</button>
+                                    <button class="quick-reply">使用教學</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <h2 class="section-title">做行銷就夠累了，還要回粉專訊息當客服？</h2>
+            <div class="problem-grid">
+                <div class="problem-item">
+                    <div class="problem-icon">😫</div>
+                    <p>粉專私訊問的問題每次都千篇一律，回覆既浪費時間又沒效率</p>
+                </div>
+                <div class="problem-item">
+                    <div class="problem-icon">📱</div>
+                    <p>行銷還要兼顧客服，客服訊息混亂無法集中管理回覆慢了、錯了還要被咎責</p>
+                </div>
+                <div class="problem-item">
+                    <div class="problem-icon">⏰</div>
+                    <p>不及時回覆私訊就錯過了商機，但很難 24/7 手動回覆</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">核心功能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">❓</div>
+                    <h3>FAQ 自動回覆</h3>
+                    <p>引導客戶選擇問題並及時獲得解答，解決 60% 常見問題私訊</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🕐</div>
+                    <h3>24/7 即時自動回覆</h3>
+                    <p>客戶私訊時馬上得到及時回覆，不用守在手機、電腦前隨時待命</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍💼</div>
+                    <h3>集中真人客服渠道</h3>
+                    <p>若無法找到答案，設置引導至真人客服的渠道，集中管理客服案件</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>留言自動回覆</h3>
+                    <p>機器人自動回覆增加互動率外，還能將留言的粉絲導入私訊互動日後推播再行銷</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">價格方案</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>免費版</h3>
+                    <div class="price">$0<span>/月</span></div>
+                    <ul class="features-list">
+                        <li>✓ 基本自動回覆</li>
+                        <li>✓ 5個常見問題</li>
+                        <li>✓ 基礎分析報告</li>
+                        <li>✗ 真人客服轉接</li>
+                    </ul>
+                    <button class="btn-outline">選擇方案</button>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="badge">推薦</div>
+                    <h3>專業版</h3>
+                    <div class="price">$29<span>/月</span></div>
+                    <ul class="features-list">
+                        <li>✓ 無限自動回覆</li>
+                        <li>✓ 50個常見問題</li>
+                        <li>✓ 詳細分析報告</li>
+                        <li>✓ 真人客服轉接</li>
+                        <li>✓ 客製化設計</li>
+                    </ul>
+                    <button class="btn-primary">選擇方案</button>
+                </div>
+                <div class="pricing-card">
+                    <h3>企業版</h3>
+                    <div class="price">$99<span>/月</span></div>
+                    <ul class="features-list">
+                        <li>✓ 所有專業版功能</li>
+                        <li>✓ 無限常見問題</li>
+                        <li>✓ 多平台整合</li>
+                        <li>✓ 專屬客服支援</li>
+                        <li>✓ API 整合</li>
+                    </ul>
+                    <button class="btn-outline">聯繫我們</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Chatbot 新平台免費試用中！<br>打造專屬聊天機器人趁現在！</h2>
+            <div class="cta-buttons">
+                <button class="btn-primary" onclick="openChatbot()">免費試用</button>
+                <button class="btn-secondary" onclick="scrollToSection('pricing')">查看方案</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>產品與服務</h4>
+                    <ul>
+                        <li><a href="#">AI Chatbot 平台</a></li>
+                        <li><a href="#">社群會員管理</a></li>
+                        <li><a href="#">精準廣告投放</a></li>
+                        <li><a href="#">智能客服系統</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>解決方案</h4>
+                    <ul>
+                        <li><a href="#">獲客｜廣告投放</a></li>
+                        <li><a href="#">互動｜提升社群互動</a></li>
+                        <li><a href="#">客服｜私訊自動回覆</a></li>
+                        <li><a href="#">轉換｜再行銷</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>關於我們</h4>
+                    <ul>
+                        <li><a href="#">加入我們</a></li>
+                        <li><a href="#">媒體報導</a></li>
+                        <li><a href="#">隱私政策</a></li>
+                        <li><a href="#">服務條款</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>聯繫我們</h4>
+                    <p>📧 contact@aichatbot.com</p>
+                    <p>📞 +886-2-1234-5678</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-line"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AI Chatbot Platform Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget" id="chatbotWidget">
+        <div class="chatbot-toggle" onclick="toggleChatbot()">
+            <i class="fas fa-comments"></i>
+            <span class="notification-badge">1</span>
+        </div>
+        <div class="chatbot-container" id="chatbotContainer">
+            <div class="chatbot-header">
+                <div class="chatbot-avatar">🤖</div>
+                <div class="chatbot-info">
+                    <h4>AI 客服助手</h4>
+                    <span class="status online">線上</span>
+                </div>
+                <button class="chatbot-close" onclick="toggleChatbot()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        您好！我是 AI 客服助手，有什麼可以幫助您的嗎？
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="userInput" placeholder="輸入您的問題..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
