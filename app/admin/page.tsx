@@ -10,17 +10,26 @@ import { FAQ, Message, ApiResponse, Stats } from '@/app/types'
 const fetchFAQs = async (): Promise<FAQ[]> => {
   try {
     console.log('發送 FAQ 請求到 /api/faqs')
-    const response = await fetch('/api/faqs')
+    const response = await fetch('/api/faqs', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      cache: 'no-cache',
+    })
     console.log('收到回應狀態:', response.status)
     
     if (!response.ok) {
-      throw new Error(`HTTP 錯誤: ${response.status}`)
+      const errorText = await response.text()
+      console.error('API 錯誤回應:', errorText)
+      throw new Error(`HTTP 錯誤: ${response.status} - ${errorText}`)
     }
     
     const result: ApiResponse<FAQ[]> = await response.json()
     console.log('API 回應:', result)
     
     if (result.success && result.data) {
+      console.log('FAQ 載入成功，數量:', result.data.length)
       return result.data
     }
     throw new Error(result.error || '獲取 FAQ 失敗')
@@ -124,6 +133,7 @@ export default function AdminPage() {
         console.log('開始加載 FAQ 數據...')
         const data = await fetchFAQs()
         console.log('FAQ 數據加載成功:', data)
+        console.log('FAQ 數據類型:', typeof data, '長度:', Array.isArray(data) ? data.length : '不是陣列')
         setFaqs(data)
       } catch (err) {
         console.error('加載 FAQ 失敗:', err)

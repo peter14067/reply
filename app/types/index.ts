@@ -14,6 +14,7 @@ export interface FAQ {
   keywords: string[]
   priority: number
   isActive: boolean
+  chatbotId?: string
   createdAt?: string
   updatedAt?: string
 }
