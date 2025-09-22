@@ -8,12 +8,26 @@ import { FAQ, Message, ApiResponse, Stats } from '@/app/types'
 
 // API 調用函數
 const fetchFAQs = async (): Promise<FAQ[]> => {
-  const response = await fetch('/api/faqs')
-  const result: ApiResponse<FAQ[]> = await response.json()
-  if (result.success && result.data) {
-    return result.data
+  try {
+    console.log('發送 FAQ 請求到 /api/faqs')
+    const response = await fetch('/api/faqs')
+    console.log('收到回應狀態:', response.status)
+    
+    if (!response.ok) {
+      throw new Error(`HTTP 錯誤: ${response.status}`)
+    }
+    
+    const result: ApiResponse<FAQ[]> = await response.json()
+    console.log('API 回應:', result)
+    
+    if (result.success && result.data) {
+      return result.data
+    }
+    throw new Error(result.error || '獲取 FAQ 失敗')
+  } catch (error) {
+    console.error('fetchFAQs 錯誤:', error)
+    throw error
   }
-  throw new Error(result.error || '獲取 FAQ 失敗')
 }
 
 const createFAQ = async (faq: Omit<FAQ, 'id' | 'createdAt' | 'updatedAt'>): Promise<FAQ> => {
@@ -107,9 +121,12 @@ export default function AdminPage() {
       setLoading(true)
       setError(null)
       try {
+        console.log('開始加載 FAQ 數據...')
         const data = await fetchFAQs()
+        console.log('FAQ 數據加載成功:', data)
         setFaqs(data)
       } catch (err) {
+        console.error('加載 FAQ 失敗:', err)
         setError(err instanceof Error ? err.message : '加載 FAQ 失敗')
       } finally {
         setLoading(false)
@@ -392,15 +409,40 @@ export default function AdminPage() {
                     <div>
                       <h2 className="text-3xl font-bold text-gray-900 mb-2">FAQ 管理</h2>
                       <p className="text-gray-600">管理常見問題和自動回覆內容</p>
+                      <p className="text-sm text-gray-500 mt-1">載入狀態: {loading ? '載入中...' : '已完成'} | FAQ 數量: {faqs.length}</p>
                     </div>
-                    <button
-                      onClick={() => setShowAddFAQ(true)}
-                      className="btn btn-primary flex items-center space-x-2 group"
-                      disabled={loading}
-                    >
-                      <Plus className="h-5 w-5 group-hover:rotate-90 transition-transform" />
-                      <span>新增 FAQ</span>
-                    </button>
+                    <div className="flex space-x-3">
+                      <button
+                        onClick={() => {
+                          setLoading(true)
+                          setError(null)
+                          fetchFAQs()
+                            .then(data => {
+                              setFaqs(data)
+                              setLoading(false)
+                            })
+                            .catch(err => {
+                              setError(err instanceof Error ? err.message : '重新載入 FAQ 失敗')
+                              setLoading(false)
+                            })
+                        }}
+                        className="btn btn-secondary flex items-center space-x-2"
+                        disabled={loading}
+                      >
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span>重新載入</span>
+                      </button>
+                      <button
+                        onClick={() => setShowAddFAQ(true)}
+                        className="btn btn-primary flex items-center space-x-2 group"
+                        disabled={loading}
+                      >
+                        <Plus className="h-5 w-5 group-hover:rotate-90 transition-transform" />
+                        <span>新增 FAQ</span>
+                      </button>
+                    </div>
                   </div>
 
                   {error && (
@@ -434,6 +476,19 @@ export default function AdminPage() {
                             <div className="text-gray-600 font-medium">載入中...</div>
                           </div>
                         </div>
+                      ) : faqs.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-12">
+                          <MessageCircle className="h-12 w-12 text-gray-400 mb-4" />
+                          <h3 className="text-lg font-medium text-gray-900 mb-2">尚無 FAQ 資料</h3>
+                          <p className="text-gray-500 mb-4">點擊「新增 FAQ」開始建立常見問題</p>
+                          <button
+                            onClick={() => setShowAddFAQ(true)}
+                            className="btn btn-primary flex items-center space-x-2"
+                          >
+                            <Plus className="h-5 w-5" />
+                            <span>新增 FAQ</span>
+                          </button>
+                        </div>
                       ) : (
                         <table className="w-full">
                           <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
@@ -453,7 +508,7 @@ export default function AdminPage() {
                                 </td>
                                 <td className="px-6 py-4">
                                   <div className="flex flex-wrap gap-1">
-                                    {faq.keywords.map((keyword, index) => (
+                                    {faq.keywords && faq.keywords.map((keyword, index) => (
                                       <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary-100 text-primary-800 font-medium">
                                         {keyword}
                                       </span>
