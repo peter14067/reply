@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/app/lib/prisma'
 
-export async function POST() {
+export async function GET() {
   try {
     console.log('🚀 開始初始化資料庫...')
     
@@ -147,4 +147,8 @@ export async function POST() {
       { status: 500 }
     )
   }
+}
+
+export async function POST() {
+  return GET()
 }
