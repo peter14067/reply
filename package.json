@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db:init": "node scripts/init-db.js",
@@ -12,7 +12,10 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "postdeploy": "node scripts/post-deploy.js",
-    "fix:vercel": "node scripts/fix-vercel-deployment.js"
+    "fix:vercel": "node scripts/fix-vercel-deployment.js",
+    "test:deployment": "node scripts/test-deployment.js",
+    "vercel:guide": "node scripts/vercel-deployment-guide.js",
+    "vercel:auth": "node scripts/fix-vercel-auth.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
