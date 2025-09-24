@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:init": "node scripts/init-db.js",
+    "db:init:postgres": "node scripts/init-postgres.js",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "postdeploy": "node scripts/post-deploy.js",

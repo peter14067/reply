@@ -24,5 +24,11 @@
       "src": "/api/(.*)",
       "dest": "/api/$1"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/health",
+      "schedule": "0 */6 * * *"
+    }
   ]
 }
