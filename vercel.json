@@ -13,6 +13,9 @@
       "DATABASE_URL": "@database_url"
     }
   },
+  "env": {
+    "DATABASE_URL": "@database_url"
+  },
   "builds": [
     {
       "src": "package.json",

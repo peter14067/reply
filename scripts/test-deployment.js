@@ -76,7 +76,7 @@ async function runTests() {
 
     // 初始化資料庫
     console.log('3. 初始化資料庫...');
-    await testEndpoint('/api/init-db', 'POST');
+    await testEndpoint('/api/vercel-init', 'POST');
     console.log('');
 
     // 再次測試 FAQ 端點

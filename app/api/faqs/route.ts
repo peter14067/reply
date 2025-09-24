@@ -51,14 +51,17 @@ export async function GET() {
     console.error('Error details:', {
       message: errorMessage,
       stack: errorStack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV,
+      databaseUrl: process.env.DATABASE_URL ? 'Set' : 'Not set'
     })
     
     return NextResponse.json(
       { 
         success: false, 
         error: '獲取 FAQ 失敗',
-        details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+        details: process.env.NODE_ENV === 'development' ? errorMessage : 'Database connection error',
+        timestamp: new Date().toISOString()
       },
       { status: 500 }
     )

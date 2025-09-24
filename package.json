@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && prisma db push && next build",
     "start": "next start",
     "lint": "next lint",
     "db:init": "node scripts/init-db.js",
@@ -12,6 +12,7 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "postdeploy": "node scripts/post-deploy.js",
+    "vercel:init": "node scripts/vercel-init.js",
     "fix:vercel": "node scripts/fix-vercel-deployment.js",
     "test:deployment": "node scripts/test-deployment.js",
     "vercel:guide": "node scripts/vercel-deployment-guide.js",
