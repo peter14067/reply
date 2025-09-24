@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma db push && next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "prisma generate",
     "db:init": "node scripts/init-db.js",
     "db:init:postgres": "node scripts/init-postgres.js",
     "db:generate": "prisma generate",
